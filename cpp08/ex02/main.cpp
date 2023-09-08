@@ -1,73 +1,30 @@
-#include "Base.hpp"
-#include "A.hpp"
-#include "B.hpp"
-#include "C.hpp"
+#include "MutantStack.hpp"
 
 
-void identify(Base *p)
+
+int main()
 {
-    if (A *a = dynamic_cast<A*>(p))
-        std::cout << "Type: A" << std::endl;
-    else if (B *b = dynamic_cast<B*>(p))
-        std::cout << "Type: B" << std::endl;
-    else if (C *c = dynamic_cast<C*>(p))
-        std::cout << "Type: C" << std::endl;
-}
+    MutantStack<int> mstack;
 
-void identify(Base &p)
-{
-    try
+    mstack.push(5);
+    mstack.push(17);
+    std::cout << mstack.top() << std::endl;
+    mstack.pop();
+    std::cout << mstack.size() << std::endl;
+    mstack.push(3); mstack.push(5);
+    mstack.push(737);
+    mstack.push(0);
+    
+    MutantStack<int>::iterator it = mstack.begin();
+    MutantStack<int>::iterator ite = mstack.end();
+    ++it;
+    --it;
+    while (it != ite)
     {
-        A &a = dynamic_cast<A&>(p);
-        std::cout << "Type Id: A" << std::endl;
+        std::cout << *it << std::endl;
+        ++it;
     }
-    catch (const std::exception& e)
-    {
+    
 
-    }
-    try
-    {
-        B &b = dynamic_cast<B&>(p);
-        std::cout << "Type Id: B" << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-
-    }
-    try
-    {
-        C &c = dynamic_cast<C&>(p);
-        std::cout << "Type Id: C" << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-
-    }
-}
-
-Base* generate(void)
-{
-    std::srand(std::time(NULL));
-    int randomNumber = std::rand() % 3;
-    switch (randomNumber)
-    {
-    case 0:
-        return new A();
-    case 1:
-        return new B();
-    default:
-        return new C();
-    }
-}
-
-
-
-int main(void)
-{
-    Base *base = generate();
-    identify(base);
-    identify(*base);
-
-    delete(base);
     return 0;
 }

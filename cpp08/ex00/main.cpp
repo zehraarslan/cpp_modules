@@ -1,15 +1,34 @@
-#include <iostream>
-#include <string>
-#include <ctype.h>
-#include "Convert.hpp"
+#include "easyfind.hpp"
 
-int main(int argc, char **argv)
+int main()
 {
-    if (argc != 2)
+    std::vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.push_back(40);
+    vec.push_back(50);
+    vec.push_back(60);
+
+    std::vector<int>::iterator iter;
+    try
     {
-        std::cout << "Kullanım: ./convert <number>" << std::endl;
-        return 0;
+        iter = easyfind(vec, 34);
+        std::cout << *iter << std::endl;
     }
-    Convert convert;
-    convert.typeDetection(argv[1]);
+    catch(const std::runtime_error& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    try
+    {
+        iter = easyfind(vec, 30);
+        std::cout << *iter << std::endl;
+    }
+    catch(const std::runtime_error& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    return 0;
 }

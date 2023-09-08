@@ -1,9 +1,9 @@
-NAME = convert
+NAME = whatever
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 RM = rm -rf
 
-SRC = main.cpp Convert.cpp
+SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)

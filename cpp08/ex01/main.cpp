@@ -1,33 +1,59 @@
-#include <iostream>
-#include <cstdint>
+#include "Span.hpp"
 
-struct Data
+int main()
 {
-    std::string name;
-    int age;
-};
+    Span sp = Span(5);
+    
+    try
+    {
+        sp.addNumber(6);
+        sp.addNumber(3);
+        sp.addNumber(17);
+        sp.addNumber(9);
+        sp.addNumber(11);
+        std::cout << sp.shortestSpan() << std::endl;
+        std::cout << sp.longestSpan() << std::endl;
 
-uintptr_t serialize(Data* ptr)
-{
-    return reinterpret_cast<uintptr_t>(ptr);
-}
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    try
+    {
+        Span sp3 = Span(5);
+        sp3.addNumber(2);
+        std::cout << sp3.shortestSpan() << std::endl;
+        std::cout << sp3.longestSpan() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
 
-Data* deserialize(uintptr_t raw)
-{
-    return reinterpret_cast<Data*>(raw);
-}
+    try
+    {
+        Span sp2(5);
+        std::vector<int> numbers;
+        numbers.push_back(12);
+        numbers.push_back(12);
+        numbers.push_back(13);
+        numbers.push_back(14);
+        numbers.push_back(15);
+        numbers.push_back(16);
+        numbers.push_back(17);
+        numbers.push_back(18);
+        sp2.addNumber(numbers.begin() + 3, numbers.end()- 1);
+        sp2.printNumbers();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+   
 
-int main(void) 
-{
-    Data *data = new Data();
-    uintptr_t address;
-    data->name = "Zehra";
-    data->age = 25;
-
-    address = serialize(data);
-    std::cout << "Name: " << deserialize(address)->name << std::endl;
-    std::cout << "Age:  " << deserialize(address)->age << std::endl;
-
-    delete data;
+    
     return 0;
 }

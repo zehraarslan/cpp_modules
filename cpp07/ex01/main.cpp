@@ -1,33 +1,27 @@
-#include <iostream>
-#include <cstdint>
+#include "iter.hpp"
 
-struct Data
+template<typename T, typename F>
+void iter(T *array, size_t length, F func)
 {
-    std::string name;
-    int age;
-};
+    for(size_t i = 0; i < length; i++)
+    {
+        func(array[i]);
+    }
 
-uintptr_t serialize(Data* ptr)
-{
-    return reinterpret_cast<uintptr_t>(ptr);
 }
 
-Data* deserialize(uintptr_t raw)
+template<typename T>
+void ShowValue(T index)
 {
-    return reinterpret_cast<Data*>(raw);
+    std::cout << index << std::endl;
 }
 
-int main(void) 
+int main(void)
 {
-    Data *data = new Data();
-    uintptr_t address;
-    data->name = "Zehra";
-    data->age = 25;
+    int arr[] = {1, 2, 3, 4, 5};
+    iter(arr, 4, ShowValue<int>);
 
-    address = serialize(data);
-    std::cout << "Name: " << deserialize(address)->name << std::endl;
-    std::cout << "Age:  " << deserialize(address)->age << std::endl;
-
-    delete data;
+    std::string arr2[] = {"Zehra", "Merve", "Şeyma", "Hülya"};
+    iter(arr2, 4, ShowValue<std::string>);
     return 0;
 }

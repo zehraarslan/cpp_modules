@@ -1,73 +1,101 @@
-#include "Base.hpp"
-#include "A.hpp"
-#include "B.hpp"
-#include "C.hpp"
+#include "Array.hpp"
 
-
-void identify(Base *p)
-{
-    if (A *a = dynamic_cast<A*>(p))
-        std::cout << "Type: A" << std::endl;
-    else if (B *b = dynamic_cast<B*>(p))
-        std::cout << "Type: B" << std::endl;
-    else if (C *c = dynamic_cast<C*>(p))
-        std::cout << "Type: C" << std::endl;
-}
-
-void identify(Base &p)
-{
-    try
-    {
-        A &a = dynamic_cast<A&>(p);
-        std::cout << "Type Id: A" << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-
-    }
-    try
-    {
-        B &b = dynamic_cast<B&>(p);
-        std::cout << "Type Id: B" << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-
-    }
-    try
-    {
-        C &c = dynamic_cast<C&>(p);
-        std::cout << "Type Id: C" << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-
-    }
-}
-
-Base* generate(void)
-{
-    std::srand(std::time(NULL));
-    int randomNumber = std::rand() % 3;
-    switch (randomNumber)
-    {
-    case 0:
-        return new A();
-    case 1:
-        return new B();
-    default:
-        return new C();
-    }
-}
-
-
-
+#define RANGE 15
 int main(void)
 {
-    Base *base = generate();
-    identify(base);
-    identify(*base);
+    Array<int> numbers_null;
+    Array<std::string> chr_null;
+    
+    Array<int> numbers(RANGE);
+    std::srand(std::time(NULL));
+    for (int i = 0; i < RANGE; i++)
+    {
+        
+        try
+        {
+           numbers[i] = std::rand();
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << "Exception: " <<e.what() << '\n';
+        }
+    }
+    for (int i = 0; i < RANGE; i++)
+    {
+        std::cout << numbers[i] << std::endl;
+    }
+    
 
-    delete(base);
+    Array<double> numbers_d(RANGE);
+    for (int i = 0; i < RANGE; i++)
+    {
+        
+        try
+        {
+           numbers_d[i] = std::rand();
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << "Exception: " <<e.what() << '\n';
+        }
+    }
+     for (int i = 0; i < RANGE; i++)
+    {
+        std::cout << numbers_d[i] << std::endl;
+    }
+
+    Array<char> chr(RANGE);
+    for (int i = 0; i < RANGE; i++)
+    {
+        try
+        {
+            int randomNumber = std::rand() % 26;
+            chr[i] = 'A' + randomNumber;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+    for (int i = 0; i < RANGE; i++)
+    {
+        std::cout << chr[i] << std::endl;
+    }
+
+    try
+    {
+        std::cout << "numbers size: " << numbers.size() << std::endl;
+        numbers[20] = 5;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception: " <<e.what() << '\n';
+    }
+
+    try
+    {
+        numbers[-2] = 0;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    try
+    {
+        numbers[RANGE] = 0;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    try
+    {
+        chr[RANGE] = 'A';
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
     return 0;
 }

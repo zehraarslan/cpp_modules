@@ -1,9 +1,9 @@
-NAME = serialization
+NAME = span
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 RM = rm -rf
 
-SRC = main.cpp
+SRC = main.cpp Span.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
